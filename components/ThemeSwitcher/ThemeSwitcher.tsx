@@ -3,27 +3,23 @@
 import { FC } from "react";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { SwitchProps, useSwitch } from "@nextui-org/switch";
-import { useTheme } from "next-themes";
-import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
+
+import { useThemeSwitcher } from "./useThemeSwitcher";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 
-export interface ThemeSwitchProps {
+export interface IThemeSwitcher {
   className?: string;
   classNames?: SwitchProps["classNames"];
 }
 
-export const ThemeSwitch: FC<ThemeSwitchProps> = ({
+export const ThemeSwitcher: FC<IThemeSwitcher> = ({
   className,
   classNames,
 }) => {
-  const { theme, setTheme } = useTheme();
-  const isSSR = useIsSSR();
-
-  const onChange = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
-  };
+  const themeSwitcher = useThemeSwitcher();
+  const theme = themeSwitcher ? themeSwitcher.theme : "light"; // Default to "light" if null
 
   const {
     Component,
@@ -33,9 +29,8 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     getInputProps,
     getWrapperProps,
   } = useSwitch({
-    isSelected: theme === "light" || isSSR,
-    "aria-label": `Switch to ${theme === "light" || isSSR ? "dark" : "light"} mode`,
-    onChange,
+    isSelected: theme === "light",
+    "aria-label": `Switch to ${theme === "light" ? "dark" : "light"} mode`,
   });
 
   return (
@@ -44,7 +39,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         className: clsx(
           "px-px transition-opacity hover:opacity-80 cursor-pointer",
           className,
-          classNames?.base,
+          classNames?.base
         ),
       })}
     >
@@ -66,14 +61,20 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
               "px-0",
               "mx-0",
             ],
-            classNames?.wrapper,
+            classNames?.wrapper
           ),
         })}
       >
-        {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
+        {!isSelected ? (
+          <SunFilledIcon
+            size={22}
+            onClick={() => themeSwitcher?.setTheme("light")}
+          />
         ) : (
-          <MoonFilledIcon size={22} />
+          <MoonFilledIcon
+            size={22}
+            onClick={() => themeSwitcher?.setTheme("dark")}
+          />
         )}
       </div>
     </Component>
