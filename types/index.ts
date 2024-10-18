@@ -10,3 +10,8 @@ export interface IAsset {
   name: string;
   type: AssetType;
 }
+
+export interface IModal {
+  isOpen: boolean;
+  onOpenChange: () => void;
+}
