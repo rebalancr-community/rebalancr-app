@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { searchAsset } from "@/services";
 import { IAsset } from "@/types";
 import { useDebounce } from "@/hooks/useDebounce";
+import { searchAsset } from "@/services/assets";
 
 export const useAddAssetModal = () => {
   const [searchQuery, setSearchQuery] = useState("");
