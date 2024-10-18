@@ -4,20 +4,24 @@ import { Button, Input } from "@nextui-org/react";
 import NextLink from "next/link";
 import Image from "next/image";
 
+import { useLogin } from "./useLogin";
+
 export default function Login() {
+  const { theme, onSubmit, register, formState, handleSubmit } = useLogin();
+
   return (
     <div className="px-16 container">
-      <NextLink href={"/"}>
-        <div className="w-1/4 mb-10">
+      <div className="w-1/4 mb-10">
+        <NextLink href={"/"}>
           <Image
             alt="login background"
             className="object-cover w-full h-full"
             height={500}
-            src="/assets/logo-white-bg.png"
+            src={`/assets/logo-${theme !== "dark" ? "white" : "dark"}-bg.png`}
             width={500}
           />
-        </div>
-      </NextLink>
+        </NextLink>
+      </div>
       <h1 className="text-4xl mb-2 font-semibold">Acesse seu portfolio!</h1>
       <div className="flex flex-col">
         <div className=" relative top-1 flex-col !items-start my-5">
@@ -28,26 +32,49 @@ export default function Login() {
             ...para poder configurar o seu portfolio
           </p>
         </div>
-        <div className="flex flex-col gap-4 items-center text-center">
-          <Input
-            className="opacity-95"
-            label="Email"
-            placeholder="Insira seu email"
-            type="email"
-          />
-          <Input
-            className="opacity-95"
-            label="Senha"
-            placeholder="Insira sua senha"
-            type="password"
-          />
+        <form
+          className="flex flex-col gap-4 items-center text-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="w-full">
+            <Input
+              className="opacity-95"
+              label="Email"
+              placeholder="Insira seu email"
+              type="email"
+              {...register("email", { required: "Email é obrigatório" })}
+            />
+            {formState.errors.email && (
+              <p className="text-red-500 text-xs">
+                {formState.errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div className="w-full">
+            <Input
+              className="opacity-95"
+              label="Senha"
+              placeholder="Insira sua senha"
+              type="password"
+              {...register("password", { required: "Senha é obrigatória" })}
+            />
+            {formState.errors.password && (
+              <p className="text-red-500 text-xs">
+                {formState.errors.password.message}
+              </p>
+            )}
+          </div>
+
           <Button
             className="bg-purple-600 text-white shadow-lg w-full"
+            // isDisabled={isLoading}
             radius="md"
+            type="submit"
           >
             Entrar
           </Button>
-        </div>
+        </form>
         <div className="flex justify-center mt-4">
           <p className="text-tiny font-bold">
             Não tem uma conta?{" "}

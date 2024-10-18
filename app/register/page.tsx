@@ -7,8 +7,8 @@ import NextLink from "next/link";
 export default function Login() {
   return (
     <div className="px-16 container">
-      <NextLink href={"/"}>
-        <div className="w-1/4 mb-10">
+      <div className="w-1/4 mb-10">
+        <NextLink href={"/"}>
           <Image
             alt="login background"
             className="object-cover w-full h-full"
@@ -16,8 +16,8 @@ export default function Login() {
             src="/assets/logo-white-bg.png"
             width={500}
           />
-        </div>
-      </NextLink>
+        </NextLink>
+      </div>
       <h1 className="text-4xl mb-2 font-semibold">Seja bem vindo!</h1>
       <div className="flex flex-col">
         <div className=" relative top-1 flex-col !items-start my-5">

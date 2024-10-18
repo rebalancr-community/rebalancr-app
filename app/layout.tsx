@@ -1,4 +1,7 @@
 import "@/styles/globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+import { config } from "@fortawesome/fontawesome-svg-core";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 
@@ -6,6 +9,8 @@ import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
+
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: {
@@ -39,7 +44,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
             <main className="container mx-auto max-w-7xl flex-grow">
               {children}
