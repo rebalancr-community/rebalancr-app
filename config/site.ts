@@ -5,10 +5,6 @@ export const siteConfig = {
   description: "Portfolio rebalancing made easy",
   navItems: [
     {
-      label: "Home",
-      href: "/",
-    },
-    {
       label: "About",
       href: "/about",
     },
